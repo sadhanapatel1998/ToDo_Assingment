@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title></title>
+    <meta charset="utf-8">
+         <meta name="viewport" content="width=device-width, initial-scale=1">
+         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</head>
+<style>
+ 
+ .left {
+  margin: auto; 
+  width: 60%;
+  border: 2px #E6E6FA;
+  padding: 30px;
+  background-color: #E6E6FA;
+  margin-top:20px
+  }
+
+   .right { 
+  width: 60%;
+  padding: 5px;
+  }
+  
+ table tr td:last-child{
+  width: 30px;
+  }
+  .table{
+  } 
+  thead{
+   background-color: #E6E6FA;
+  }
+  .fa{
+    font-size:20px;
+    color: #e60000;
+
+  }
+  p{
+    color: #e60000;
+  }
+  
+
+  </style>
+ 
+<body>
+    <div class="container-fluid ">
+      <div class="col-sm-6">
+       <div class="left">
+       <form  onsubmit="event.preventDefault();onFormSubmit();" id="myForm">
+          
+         <div class="form-group">
+          <strong>Name:</strong>
+          <input type="text"   class="form-control" id="name" required>
+        </div>
+
+        <div class="form-group">
+          <strong >Age:</strong>
+          <input type="number"  class="form-control" id="age" required>
+        </div>
+        <span id="error"></span>
+
+        <div class="clearfix">
+         <input type="submit" name="submit"  class="btn btn-primary float-left " value="Submit">
+
+         <button type="button"   onclick="myFunction()" class="btn btn-danger cancel float-right">Clear</button>
+       </div>
+    </form>
+  </div>
+</div>
+
+    <div class="col-sm-6">
+      <div class="right">
+      <table class="table table-hover table-bordered" id="customerList">
+            <p><b>Customer<b></p>
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Age</th>
+                <th>action</th>
+              </tr>
+            </thead>
+            <tbody id="demo">
+        
+            </tbody>
+          </table> 
+           <button class="btn btn-primary btn-block" type="button" onclick="allDelete()" 
+           id="test">Remove All</button>
+         </div>
+     </div>  
+
+
+</div>
+
+    <script type="text/javascript">
+      function myFunction() {
+        document.getElementById("myForm").reset();
+       }
+ 
+    function onFormSubmit(){
+      var formData = readFormData();
+      insertNewRecord(formData);
+    }
+
+    function readFormData(){
+      var formData ={};
+      formData["name"] = document.getElementById("name").value;
+      formData["age"] = document.getElementById("age").value;
+       return formData;
+
+    }
+
+    function insertNewRecord(data) {
+      var table = document.getElementById("customerList").getElementsByTagName('tbody')[0];
+      var newRow = table.insertRow(table.length);
+      cell1 = newRow.insertCell(0);
+      cell1.innerHTML=data.name;
+      cell2 = newRow.insertCell(1);
+      cell2.innerHTML=data.age;
+      cell3 = newRow.insertCell(2);
+      cell3.innerHTML='<button class="btn btn-danger btn-sm" onclick= "onDelete(this)">Delete</button>';
+    }
+
+    function onDelete(td){
+      if (confirm('Are you sure to delete this record ?')) {
+        row = td.parentElement.parentElement;
+        document.getElementById('customerList').deleteRow(row.rowIndex);
+        resetForm();  
+      }
+    }
+
+     
+    </script>
+</body>
+</html>
+<script>
+$(document).ready(function(){
+
+  $("#test").click(function(){
+  confirm('Are you sure to delete all record ?')
+    $("#demo").remove();
+  });
+
+});
+
+
+</script>
+
